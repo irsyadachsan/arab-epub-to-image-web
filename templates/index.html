@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ArabEpub2Image Web</title>
+    <!-- Menghubungkan file CSS lokal untuk styling aplikasi -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Konversi ePub Arab ke Gambar</h1>
+
+      <!-- Form untuk mengunggah file ePub dan memasukkan prompt AI -->
+      <form id="uploadForm" enctype="multipart/form-data">
+        <label for="epubFile">Pilih File ePub:</label>
+        <input type="file" name="epub_file" id="epubFile" accept=".epub" />
+
+        <label for="llmPrompt" style="margin-top: 20px">Prompt untuk AI (Opsional):</label>
+        <textarea
+          name="llm_prompt"
+          id="llmPrompt"
+          rows="5"
+          placeholder="Contoh: 'Ringkas buku ini dalam 5 poin utama.' atau 'Terjemahkan seluruh buku ke Bahasa Inggris.' Anda juga bisa minta warna background: 'background berwarna merah!'"
+        ></textarea>
+
+        <!-- Checkbox untuk mengontrol rendering gambar halaman ePub asli -->
+        <div style="margin-top: 15px; text-align: left; width: 100%; max-width: 400px">
+          <input type="checkbox" id="renderEpubPages" name="render_epub_pages" value="true" checked />
+          <label for="renderEpubPages" style="display: inline; font-size: 0.95em; font-weight: normal">Tampilkan Gambar Halaman ePub Asli (Memakan Waktu)</label>
+        </div>
+
+        <!-- Tombol untuk memulai proses konversi dan pemrosesan AI -->
+        <button type="submit">Konversi & Proses AI</button>
+      </form>
+
+      <!-- Area untuk menampilkan pesan status dan spinner loading -->
+      <div id="status-area" style="margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 10px">
+        <div id="status" style="font-weight: bold"></div>
+        <div class="spinner" id="loadingSpinner" style="display: none"></div>
+      </div>
+
+      <!-- Area untuk menampilkan teks hasil pemrosesan AI (LLM) -->
+      <div id="llmResultText" style="margin-top: 40px; text-align: left">
+        <!-- Teks hasil AI akan dimuat di sini oleh JavaScript -->
+      </div>
+
+      <!-- Area untuk menampilkan gambar hasil pemrosesan AI (LLM) -->
+      <div id="llmResultImage" style="margin-top: 40px">
+        <!-- Gambar hasil AI akan dimuat di sini oleh JavaScript -->
+      </div>
+
+      <!-- Area untuk menampilkan gambar-gambar konten ePub asli -->
+      <div id="imageResults" style="margin-top: 40px">
+        <!-- Gambar-gambar konten ePub asli akan dimuat di sini oleh JavaScript -->
+      </div>
+
+      <!-- Area untuk menampilkan log kinerja aplikasi -->
+      <div id="performanceLogs" style="margin-top: 40px; border-top: 1px solid var(--border-color); padding-top: 20px">
+        <h2>Log Kinerja</h2>
+        <div style="margin-bottom: 15px">
+          <!-- Tombol untuk mengunduh log kinerja dalam format Excel -->
+          <button id="downloadLogBtn" style="margin-right: 10px">Unduh Log Kinerja (Excel)</button>
+          <!-- Tombol untuk membersihkan semua log kinerja -->
+          <button id="clearLogBtn">Bersihkan Log Kinerja</button>
+        </div>
+        <div id="logTableContainer" style="overflow-x: auto">
+          <!-- Tabel log kinerja akan dimuat di sini oleh JavaScript -->
+          <!-- Data log awal dimuat dari Flask saat halaman pertama kali dirender -->
+          {% if performance_logs %}
+          <table class="performance-table">
+            <thead>
+              <tr>
+                <th>Timestamp</th>
+                <th>ePub Filename</th>
+                <th>LLM Prompt</th>
+                <th>LLM Response (Partial)</th>
+                <th>ROUGE-1 F1 Score</th>
+                <th>Total Duration (s)</th>
+                <th>Num ePub Pages</th>
+                <th>Num Chunks</th>
+                <th>Status Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for log in performance_logs %}
+              <tr>
+                <td>{{ log.Timestamp }}</td>
+                <td>{{ log['ePub Filename'] }}</td>
+                <td>{{ log['LLM Prompt'] }}</td>
+                <td>{{ log['LLM Response (Partial)'] }}</td>
+                <td>{{ log['ROUGE-1 F1 Score'] }}</td>
+                <td>{{ log['Total Duration (s)'] }}</td>
+                <td>{{ log['Num ePub Pages'] }}</td>
+                <td>{{ log['Num Chunks'] }}</td>
+                <td>{{ log['Status Message'] }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <p>Belum ada log kinerja.</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Menghubungkan file JavaScript lokal untuk fungsionalitas frontend -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <!-- Variabel global untuk memuat log kinerja awal dari Flask ke JavaScript -->
+    <script>
+      // Pastikan performance_logs selalu ada dan diubah ke JSON yang aman
+      // Menggunakan |safe filter untuk memastikan JSON disisipkan dengan aman ke JavaScript
+      // Menggunakan JSON.parse() untuk mengonversi string JSON menjadi objek JavaScript
+      const initialPerformanceLogs = JSON.parse("{{ performance_logs | tojson | safe }}");
+    </script>
+  </body>
+</html>

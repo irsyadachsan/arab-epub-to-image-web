@@ -1,0 +1,13 @@
+# Ignore virtual environment folder
+venv/
+
+# Ignore API keys file
+.env
+
+# Ignore uploaded files and generated images (they are temporary)
+uploads/
+generated_images/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc

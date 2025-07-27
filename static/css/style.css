@@ -1,0 +1,363 @@
+/* static/css/style.css */
+/* File ini berisi semua styling (CSS) untuk antarmuka pengguna aplikasi web. */
+
+/* Menggunakan System Font Stack untuk tampilan yang bersih dan konsisten dengan OS pengguna.
+   Ini juga menghilangkan kebutuhan untuk mengunduh font eksternal, meningkatkan performa. */
+/* Hapus import Google Fonts Playfair Display/Roboto untuk tampilan lebih minimalist */
+
+/* Definisi variabel CSS untuk palet warna dan nilai-nilai umum.
+   Ini memudahkan perubahan tema atau konsistensi styling di seluruh aplikasi. */
+:root {
+  --primary-color: #5b241c; /* Maroon tua / Cokelat kemerahan gelap (Warna utama) */
+  --primary-dark: #3a1711; /* Varian lebih gelap dari primary-color untuk efek hover */
+  --secondary-color: #a0522d; /* Sienna / Terracotta (Warna aksen/sekunder yang hangat) */
+  --background-light: #fdfaf6; /* Krem sangat terang, hampir putih (Warna latar belakang utama) */
+  --text-dark: #402f2d; /* Cokelat keabu-abuan gelap (Warna teks utama) */
+  --text-light: #fff; /* Putih bersih (Warna teks untuk latar belakang gelap) */
+  --border-color: #d1c6b8; /* Cokelat terang keabu-abuan (Warna border elemen) */
+  --shadow-light: rgba(0, 0, 0, 0.1); /* Bayangan lembut untuk efek kedalaman */
+  --accent-light: #e0deda; /* Warna aksen terang untuk latar belakang input/elemen sekunder */
+}
+
+/* Styling dasar untuk body halaman */
+body {
+  /* Mengatur font menggunakan system font stack */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  margin: 0; /* Menghilangkan margin default browser */
+  padding: 0; /* Menghilangkan padding default browser */
+  background-color: var(--background-light); /* Warna latar belakang dari variabel */
+  color: var(--text-dark); /* Warna teks utama dari variabel */
+  line-height: 1.6; /* Tinggi baris teks untuk keterbacaan */
+  display: flex; /* Menggunakan Flexbox untuk tata letak halaman */
+  justify-content: center; /* Pusatkan konten horizontal */
+  align-items: flex-start; /* Konten dimulai dari atas secara vertikal */
+  min-height: 100vh; /* Tinggi minimum body adalah 100% dari viewport height */
+  padding-top: 50px; /* Memberi sedikit ruang dari atas halaman */
+}
+
+/* Styling untuk kontainer utama aplikasi */
+.container {
+  background-color: var(--text-light); /* Latar belakang putih */
+  padding: 40px; /* Padding di dalam kontainer */
+  border-radius: 10px; /* Sudut membulat */
+  box-shadow: 0 5px 15px var(--shadow-light); /* Efek bayangan */
+  text-align: center; /* Pusatkan teks di dalam kontainer */
+  max-width: 800px; /* Lebar maksimum kontainer */
+  width: 90%; /* Lebar responsif */
+}
+
+/* Styling untuk judul utama (H1) */
+h1 {
+  font-family: inherit; /* Mewarisi font dari body untuk konsistensi minimalis */
+  color: var(--primary-color); /* Warna judul dari variabel */
+  font-size: 2.5em; /* Ukuran font relatif */
+  font-weight: 700; /* Ketebalan font */
+  margin-bottom: 25px; /* Margin bawah */
+  position: relative; /* Diperlukan untuk pseudo-elemen ::after */
+  display: inline-block; /* Agar garis bawah hanya selebar teks */
+}
+
+/* Garis bawah dekoratif untuk judul H1 */
+h1::after {
+  content: ""; /* Konten kosong untuk pseudo-elemen */
+  display: block; /* Agar menjadi blok dan memiliki lebar/tinggi */
+  width: 60%; /* Lebar garis */
+  height: 3px; /* Tinggi garis */
+  background-color: var(--secondary-color); /* Warna garis dari variabel */
+  margin: 10px auto 0; /* Pusatkan garis di bawah judul */
+  border-radius: 2px; /* Sudut membulat untuk garis */
+}
+
+/* Styling untuk judul bagian (H2) */
+h2 {
+  font-family: inherit; /* Mewarisi font dari body */
+  color: var(--primary-color); /* Warna judul dari variabel */
+  font-size: 1.8em; /* Ukuran font relatif */
+  font-weight: 700; /* Ketebalan font */
+  margin-bottom: 20px; /* Margin bawah */
+  text-align: center; /* Pusatkan teks */
+}
+
+/* Styling untuk form unggah */
+form {
+  margin-top: 30px; /* Margin atas */
+  display: flex; /* Menggunakan Flexbox */
+  flex-direction: column; /* Elemen ditumpuk vertikal */
+  align-items: center; /* Pusatkan elemen horizontal */
+  gap: 20px; /* Jarak antar elemen form */
+}
+
+/* Styling untuk label input */
+label {
+  font-size: 1.1em; /* Ukuran font relatif */
+  color: var(--text-dark); /* Warna teks */
+  font-weight: 500; /* Ketebalan font */
+}
+
+/* Styling untuk input file */
+input[type="file"] {
+  border: 2px solid var(--border-color); /* Border */
+  padding: 12px; /* Padding */
+  border-radius: 5px; /* Sudut membulat */
+  width: calc(100% - 24px); /* Lebar responsif (100% - padding horizontal) */
+  max-width: 400px; /* Lebar maksimum */
+  background-color: var(--accent-light); /* Warna latar belakang */
+  cursor: pointer; /* Kursor pointer saat dihover */
+  font-size: 1em; /* Ukuran font */
+  color: var(--text-dark); /* Warna teks */
+}
+
+/* Styling untuk tombol di dalam input file (file selector button) */
+input[type="file"]::file-selector-button {
+  background-color: var(--secondary-color); /* Warna latar belakang */
+  color: var(--text-light); /* Warna teks */
+  border: none; /* Tanpa border */
+  padding: 8px 15px; /* Padding */
+  border-radius: 4px; /* Sudut membulat */
+  cursor: pointer; /* Kursor pointer */
+  margin-right: 15px; /* Margin kanan */
+  transition: background-color 0.3s ease; /* Transisi halus saat hover */
+}
+
+/* Efek hover untuk tombol file selector */
+input[type="file"]::file-selector-button:hover {
+  background-color: var(--primary-color); /* Warna berubah saat hover */
+}
+
+/* Styling untuk textarea (input prompt AI) */
+textarea {
+  border: 2px solid var(--border-color); /* Border */
+  padding: 12px; /* Padding */
+  border-radius: 5px; /* Sudut membulat */
+  width: calc(100% - 24px); /* Lebar responsif */
+  max-width: 400px; /* Lebar maksimum */
+  background-color: var(--accent-light); /* Warna latar belakang */
+  font-size: 1em; /* Ukuran font */
+  color: var(--text-dark); /* Warna teks */
+  resize: vertical; /* Memungkinkan pengguna mengubah ukuran tinggi */
+}
+
+/* Efek fokus untuk textarea */
+textarea:focus {
+  outline: none; /* Hilangkan outline default */
+  border-color: var(--secondary-color); /* Warna border saat fokus */
+  box-shadow: 0 0 0 2px rgba(var(--secondary-color), 0.2); /* Efek bayangan saat fokus */
+}
+
+/* Styling untuk tombol submit */
+button[type="submit"] {
+  background-color: var(--primary-color); /* Warna latar belakang */
+  color: var(--text-light); /* Warna teks */
+  padding: 12px 25px; /* Padding */
+  border: none; /* Tanpa border */
+  border-radius: 5px; /* Sudut membulat */
+  font-size: 1.1em; /* Ukuran font */
+  font-weight: 700; /* Ketebalan font */
+  cursor: pointer; /* Kursor pointer */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Transisi halus saat hover/active */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); /* Efek bayangan */
+}
+
+/* Efek hover untuk tombol submit */
+button[type="submit"]:hover {
+  background-color: var(--primary-dark); /* Warna berubah saat hover */
+  transform: translateY(-2px); /* Sedikit naik saat hover */
+}
+
+/* Efek aktif (saat diklik) untuk tombol submit */
+button[type="submit"]:active {
+  transform: translateY(0); /* Kembali ke posisi semula */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15); /* Bayangan lebih kecil saat aktif */
+}
+
+/* Styling untuk Loading Spinner */
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1); /* Border luar spinner */
+  border-left-color: var(--secondary-color); /* Warna border kiri (yang berputar) */
+  border-radius: 50%; /* Membuat bentuk lingkaran */
+  width: 24px; /* Lebar spinner */
+  height: 24px; /* Tinggi spinner */
+  animation: spin 1s linear infinite; /* Animasi berputar tanpa henti */
+}
+
+/* Keyframes untuk animasi berputar */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  } /* Mulai dari 0 derajat */
+  100% {
+    transform: rotate(360deg);
+  } /* Berputar penuh 360 derajat */
+}
+
+/* Styling untuk area status dan hasil */
+#status-area {
+  margin-top: 20px; /* Margin atas */
+  display: flex; /* Menggunakan Flexbox */
+  align-items: center; /* Pusatkan item secara vertikal */
+  justify-content: center; /* Pusatkan item secara horizontal */
+  gap: 10px; /* Jarak antar item */
+}
+
+/* Styling untuk pesan status */
+#status {
+  font-weight: bold; /* Teks tebal */
+  margin-top: 0 !important; /* Mengesampingkan margin-top default jika ada */
+}
+
+/* Styling untuk area teks hasil LLM */
+#llmResultText {
+  margin-top: 40px; /* Margin atas */
+  text-align: left; /* Teks rata kiri */
+}
+
+/* Styling untuk elemen <pre> di dalam area teks hasil LLM */
+#llmResultText pre {
+  white-space: pre-wrap; /* Memastikan teks membungkus (word-wrap) */
+  text-align: left; /* Teks rata kiri */
+  padding: 15px; /* Padding */
+  background-color: var(--accent-light); /* Warna latar belakang */
+  border-radius: 8px; /* Sudut membulat */
+  border: 1px solid var(--border-color); /* Border */
+  overflow-x: auto; /* Scroll horizontal jika teks terlalu panjang */
+  font-size: 1em; /* Ukuran font konsisten */
+  line-height: 1.6; /* Tinggi baris */
+  color: var(--text-dark); /* Warna teks */
+}
+
+/* Styling untuk area gambar hasil LLM */
+#llmResultImage {
+  margin-top: 40px; /* Margin atas */
+  border-top: 1px solid var(--border-color); /* Garis pemisah atas */
+  padding-top: 20px; /* Padding atas */
+}
+
+/* Styling untuk gambar di dalam area gambar hasil LLM */
+#llmResultImage img {
+  max-width: 100%; /* Lebar maksimum 100% dari kontainer */
+  height: auto; /* Tinggi otomatis menjaga rasio aspek */
+  border: 1px solid var(--border-color); /* Border */
+  border-radius: 8px; /* Sudut membulat */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Efek bayangan */
+}
+
+/* Styling untuk area gambar hasil konversi ePub asli */
+#imageResults {
+  margin-top: 40px; /* Margin atas */
+  border-top: 1px solid var(--border-color); /* Garis pemisah atas */
+  padding-top: 20px; /* Padding atas */
+  display: flex; /* Menggunakan Flexbox */
+  flex-wrap: wrap; /* Memungkinkan gambar membungkus ke baris baru */
+  justify-content: center; /* Pusatkan gambar secara horizontal */
+  gap: 20px; /* Jarak antar gambar */
+}
+
+/* Styling untuk gambar di dalam area gambar hasil ePub */
+#imageResults img {
+  max-width: 100%; /* Lebar maksimum 100% dari kontainer */
+  height: auto; /* Tinggi otomatis menjaga rasio aspek */
+  border: 1px solid var(--border-color); /* Border */
+  border-radius: 8px; /* Sudut membulat */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Efek bayangan */
+  transition: transform 0.2s ease; /* Transisi halus saat hover */
+}
+
+/* Efek hover untuk gambar hasil ePub */
+#imageResults img:hover {
+  transform: scale(1.02); /* Sedikit membesar saat hover */
+}
+
+/* Styling untuk tabel log kinerja */
+.performance-table {
+  width: 100%; /* Lebar penuh */
+  border-collapse: collapse; /* Menghilangkan spasi antar border sel */
+  margin-top: 20px; /* Margin atas */
+  font-size: 0.9em; /* Ukuran font sedikit lebih kecil */
+  text-align: left; /* Teks rata kiri */
+}
+
+/* Styling untuk header dan sel tabel */
+.performance-table th,
+.performance-table td {
+  border: 1px solid var(--border-color); /* Border sel */
+  padding: 8px; /* Padding sel */
+}
+
+/* Styling untuk header tabel */
+.performance-table thead {
+  background-color: var(--accent-light); /* Warna latar belakang header */
+  color: var(--text-dark); /* Warna teks header */
+}
+
+/* Styling untuk baris genap pada body tabel */
+.performance-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9; /* Warna latar belakang sedikit berbeda */
+}
+
+/* Efek hover untuk baris tabel */
+.performance-table tbody tr:hover {
+  background-color: #f1f1f1; /* Warna latar belakang berubah saat hover */
+}
+
+/* Responsive adjustments (untuk tampilan di perangkat mobile) */
+@media (max-width: 600px) {
+  .container {
+    padding: 20px; /* Padding lebih kecil */
+    width: 95%; /* Lebar lebih besar */
+  }
+  h1 {
+    font-size: 2em; /* Ukuran judul lebih kecil */
+  }
+  /* Input file dan textarea mengambil lebar penuh */
+  input[type="file"],
+  textarea {
+    width: 100%;
+    max-width: none; /* Hapus batasan max-width */
+  }
+  /* Tombol submit mengambil lebar penuh */
+  button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+  }
+  /* Membuat tabel responsif dengan menumpuk sel secara vertikal */
+  .performance-table,
+  .performance-table thead,
+  .performance-table tbody,
+  .performance-table th,
+  .performance-table td,
+  .performance-table tr {
+    display: block;
+  }
+  /* Sembunyikan header asli di mobile */
+  .performance-table thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  /* Styling untuk setiap baris di mobile */
+  .performance-table tr {
+    border: 1px solid var(--border-color);
+    margin-bottom: 10px;
+  }
+  /* Styling untuk setiap sel di mobile */
+  .performance-table td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%; /* Memberi ruang untuk data-label */
+    text-align: right; /* Teks rata kanan */
+  }
+  /* Menampilkan header sebagai label di setiap sel */
+  .performance-table td:before {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    content: attr(data-label); /* Menggunakan atribut data-label sebagai konten */
+    font-weight: bold;
+    text-align: left;
+  }
+}
